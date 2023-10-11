@@ -14,6 +14,11 @@ namespace RPG_characterGenerator
             Strength = strength;
             Intelligence = intelligence;
         }
+
+        public override string ToString()
+        {
+            return "Name: " + this.Name + ", Strength: " + this.Strength + ", IQ: " + this.Intelligence;
+        }
     }
 
     class Fighter : Player
@@ -25,6 +30,11 @@ namespace RPG_characterGenerator
             Armor = armor;
         }
 
+        public string GetArmor()
+        {
+            return this.Armor;
+        }
+
     }
 
     class Wizard : Player
@@ -34,6 +44,13 @@ namespace RPG_characterGenerator
         {
             Mana = mana;
         }
+
+        public string GetMana()
+        {
+            return this.Mana;
+        }
+
+
     }
 
 

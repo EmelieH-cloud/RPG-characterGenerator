@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -9,7 +10,8 @@ namespace RPG_characterGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly ObservableCollection<Player> players = new ObservableCollection<Player>();
+        readonly ObservableCollection<string> players = new ObservableCollection<string>();
+        List<Player> playerObjects = new();
 
         public MainWindow()
         {
@@ -105,6 +107,13 @@ namespace RPG_characterGenerator
 
         }
 
+        private void saveObjectinList(Player p)
+        {
+            playerObjects.Add(p); // objekt 1 kommer ha index 0, object 2 kommer ha index 1 osv... 
+            MessageBox.Show("Object added!");
+
+        }
+
         private void Done_Click(object sender, RoutedEventArgs e)
         {
             string name = txtName.Text;
@@ -114,18 +123,32 @@ namespace RPG_characterGenerator
             int str = Convert.ToInt32(strength);
             string other = textOther.Text;
 
+
             int index = comboType.SelectedIndex;
             if (index == 0)
             {
+
                 Wizard wizard = new(name, str, IQ, other);
-                players.Add(wizard);
+
+                players.Add(wizard.ToString() + " Mana: " + wizard.GetMana());
+                saveObjectinList(wizard);
+                lblinputfeedback.Content = "";
             }
 
             else if (index == 1)
             {
                 Fighter fighter = new(name, str, IQ, other);
-                players.Add(fighter);
+                players.Add(fighter.ToString() + " Armor: " + fighter.GetArmor());
+                saveObjectinList(fighter);
+                lblinputfeedback.Content = "";
             }
+        }
+
+        private void PlayerListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            int index = comboType.SelectedIndex;
+            Player p = playerObjects[index];
+            MessageBox.Show("Object found: " + p);
         }
     }
 }
